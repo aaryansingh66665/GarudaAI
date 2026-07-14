@@ -2,7 +2,7 @@
   "name": "garuda-ai",
   "version": "1.0.0",
   "description": "> A privacy-first, offline-first anti-phishing Progressive Web App (PWA) that detects text, URL, and screenshot phishing attempts entirely on-device using local heuristics and client-side models. Styled with a clean, calming \"Blossom & Sage\" pastel aesthetic on a warm cream background, ensuring user data is 100% private and never leaves the browser.",
-  "main": "app.js",
+  "main": "src/app.js",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -10,7 +10,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "Apache-2.0",
   "type": "module",
   "dependencies": {
     "@mlc-ai/web-llm": "^0.2.84",

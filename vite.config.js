@@ -16,8 +16,8 @@ export default defineConfig({
         name: 'GarudaAI',
         short_name: 'GarudaAI',
         description: 'Offline AI-Powered Phishing Detection System',
-        theme_color: '#1e293b',
-        background_color: '#0f172a',
+        theme_color: '#BE123C',
+        background_color: '#FCFAF7',
         display: 'standalone'
       }
     })
