@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GarudaAI</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+  
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  
+  <div id="landing-page" class="landing-container">
+    <div class="landing-bg-decorations">
+      <div class="glow-orb orb-pink"></div>
+      <div class="glow-orb orb-sage"></div>
+    </div>
+    
+    <div class="landing-content">
+      <div class="logo-badge-container">
+        <div class="logo-shield-wrapper">
+          <i data-lucide="shield-check" class="shield-icon"></i>
+          <div class="shield-pulse"></div>
+        </div>
+      </div>
+      
+      <h1 class="landing-title">GarudaAI</h1>
+      <p class="landing-subtitle">Offline AI-Powered Phishing Detection System</p>
+      
+      <div class="privacy-badge">
+        <i data-lucide="shield-alert" class="badge-icon"></i>
+        <span>100% Privacy First — All scans run strictly on-device inside your browser</span>
+      </div>
+
+      <button id="btn-enter" class="btn-primary btn-large">
+        <span>Click to Enter Guardian</span>
+        <i data-lucide="arrow-right"></i>
+      </button>
+
+      <div class="landing-features-grid">
+        <div class="feature-mini-card">
+          <i data-lucide="wifi-off"></i>
+          <h4>Fully Offline</h4>
+          <p>No APIs or servers. Safe for sensitive data.</p>
+        </div>
+        <div class="feature-mini-card">
+          <i data-lucide="cpu"></i>
+          <h4>Local AI</h4>
+          <p>Heuristics + client-side models inside browser.</p>
+        </div>
+        <div class="feature-mini-card">
+          <i data-lucide="database"></i>
+          <h4>Zero Telemetry</h4>
+          <p>IndexedDB local storage. Clear data anytime.</p>
+        </div>
+      </div>
+    </div>
+    <div class="landing-footer">
+      <span>v1.0.0-Beta • Open Source Project</span>
+    </div>
+  </div>
+
+  
+  <div id="app-shell" class="app-shell-container hidden">
+    
+    <aside class="app-sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-logo">
+          <i data-lucide="shield-check"></i>
+        </div>
+        <div class="brand-text">
+          <h2>GarudaAI</h2>
+          <span>SHIELD</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="#" class="nav-item active" data-target="panel-dashboard">
+          <i data-lucide="layout-dashboard"></i>
+          <span>Dashboard</span>
+        </a>
+        <div class="nav-separator">SCAN MODULES</div>
+        <a href="#" class="nav-item" data-target="panel-text-scanner">
+          <i data-lucide="file-text"></i>
+          <span>Text Scanner</span>
+        </a>
+        <a href="#" class="nav-item" data-target="panel-url-scanner">
+          <i data-lucide="link"></i>
+          <span>URL Scanner</span>
+        </a>
+        <a href="#" class="nav-item" data-target="panel-screenshot-scanner">
+          <i data-lucide="image"></i>
+          <span>Screenshot Scanner</span>
+        </a>
+        <div class="nav-separator">UTILITIES</div>
+        <a href="#" class="nav-item" data-target="panel-history">
+          <i data-lucide="history"></i>
+          <span>Scan History</span>
+        </a>
+        <a href="#" class="nav-item" data-target="panel-settings">
+          <i data-lucide="settings"></i>
+          <span>Settings</span>
+        </a>
+        <a href="#" class="nav-item" data-target="panel-privacy">
+          <i data-lucide="eye-off"></i>
+          <span>Privacy & Specs</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="offline-status">
+          <span class="status-indicator online"></span>
+          <span class="status-text">System Ready (Offline)</span>
+        </div>
+        <button id="btn-back-to-splash" class="btn-text-link">
+          <i data-lucide="log-out"></i>
+          <span>Exit App</span>
+        </button>
+      </div>
+    </aside>
+
+    
+    <main class="app-main-content">
+      
+      <header class="app-header">
+        <div class="header-search-dummy">
+          <i data-lucide="search" class="search-icon"></i>
+          <span class="search-placeholder">Ask the Guardian anything...</span>
+        </div>
+        <div class="header-actions">
+          <div class="ai-badge" id="ai-status-badge" style="display: flex; align-items: center; gap: 6px; background: rgba(254, 243, 199, 0.4); color: #d97706; padding: 6px 12px; border-radius: 9999px; font-size: 13px; font-weight: 500; border: 1px solid rgba(217, 119, 6, 0.2);">
+            <i data-lucide="cpu" style="width: 14px; height: 14px;"></i>
+            <span id="ai-status-text">AI: Standby</span>
+          </div>
+          <div class="theme-badge">
+            <i data-lucide="sparkles"></i>
+            <span>Blossom & Sage Theme</span>
+          </div>
+          <div class="profile-badge">
+            <span class="profile-avatar">S</span>
+            <span class="profile-name">Student Account</span>
+          </div>
+        </div>
+      </header>
+
+      
+      <section id="panel-dashboard" class="app-panel">
+        <div class="panel-header">
+          <h1 class="panel-title">Security Dashboard</h1>
+          <p class="panel-subtitle">Monitor risk indicators and verify files or links on-device.</p>
+        </div>
+
+        
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon-wrapper pink">
+              <i data-lucide="scan"></i>
+            </div>
+            <div class="stat-info">
+              <span class="stat-label">Total Local Scans</span>
+              <h3 id="stat-total-scans" class="stat-value">0</h3>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon-wrapper green">
+              <i data-lucide="shield-check"></i>
+            </div>
+            <div class="stat-info">
+              <span class="stat-label">Legitimate Detected</span>
+              <h3 id="stat-safe-scans" class="stat-value">0</h3>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon-wrapper orange">
+              <i data-lucide="shield-alert"></i>
+            </div>
+            <div class="stat-info">
+              <span class="stat-label">Threats Quarantined</span>
+              <h3 id="stat-threat-scans" class="stat-value">0</h3>
+            </div>
+          </div>
+        </div>
+
+        
+        <div class="dashboard-content-layout">
+          <div class="launcher-section">
+            <h3 class="section-title">Start a Scanning Module</h3>
+            <div class="launchers-grid">
+              
+              <div class="launcher-card cursor-pointer" data-nav="panel-text-scanner">
+                <div class="launcher-card-header">
+                  <i data-lucide="file-text" class="text-pink"></i>
+                  <span class="tag-pill">AI Model Ready</span>
+                </div>
+                <h3>Text Phishing Scanner</h3>
+                <p>Analyze emails, SMS, WhatsApp alerts, or suspicious chat logs for fraud indicator phrases.</p>
+                <span class="launcher-action-link">Open Scanner <i data-lucide="chevron-right"></i></span>
+              </div>
+              
+              <div class="launcher-card cursor-pointer" data-nav="panel-url-scanner">
+                <div class="launcher-card-header">
+                  <i data-lucide="link" class="text-sage"></i>
+                  <span class="tag-pill">Heuristics Ready</span>
+                </div>
+                <h3>URL Feature Analyzer</h3>
+                <p>Verify typo-squatting, suspicious TLDs, length check, homoglyphs, and link shorteners.</p>
+                <span class="launcher-action-link">Open Scanner <i data-lucide="chevron-right"></i></span>
+              </div>
+              
+              <div class="launcher-card cursor-pointer" data-nav="panel-screenshot-scanner">
+                <div class="launcher-card-header">
+                  <i data-lucide="image" class="text-pink"></i>
+                  <span class="tag-pill">OCR + AI Ready</span>
+                </div>
+                <h3>Screenshot OCR Scan</h3>
+                <p>Extract visible text from image mockups, social feeds, and verify login pages.</p>
+                <span class="launcher-action-link">Open Scanner <i data-lucide="chevron-right"></i></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="quick-privacy-card">
+            <div class="privacy-card-banner">
+              <i data-lucide="hard-drive"></i>
+              <h3>100% Client-Side Pipeline</h3>
+            </div>
+            <p>Unlike standard security tools that upload files to scan servers, GarudaAI processes everything in your browser's execution memory.</p>
+            
+            <div class="pipeline-flow-vertical">
+              <div class="pipeline-step">
+                <div class="step-num">1</div>
+                <div class="step-desc">
+                  <strong>Content Staged</strong>
+                  <span>Your input remains strictly in local JS variables.</span>
+                </div>
+              </div>
+              <div class="pipeline-step">
+                <div class="step-num">2</div>
+                <div class="step-desc">
+                  <strong>Local Rules & Models</strong>
+                  <span>Tesseract OCR & local transformer models run on WebAssembly/WebGPU.</span>
+                </div>
+              </div>
+              <div class="pipeline-step">
+                <div class="step-num">3</div>
+                <div class="step-desc">
+                  <strong>IndexedDB Save</strong>
+                  <span>Logs are stored directly on your computer's disk storage.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      
+      <section id="panel-text-scanner" class="app-panel hidden">
+        <div class="panel-header">
+          <div class="panel-header-badge">MODULE 01</div>
+          <h1 class="panel-title">Text Phishing Scanner</h1>
+          <p class="panel-subtitle">Analyze message content locally for urgent requests, lures, or fraud patterns.</p>
+        </div>
+
+        <div class="scanner-layout">
+          
+          <div class="scanner-input-container card-surface">
+            <h3>Enter Message Content</h3>
+            <textarea id="text-scan-input" placeholder="Paste the suspicious email, WhatsApp message, or SMS here... (e.g. 'Congratulations! You won a FREE iPhone. Click here to claim your reward now!')"></textarea>
+            
+            <div class="input-actions-bar">
+              <span class="text-counter"><span id="text-char-count">0</span> / 2000 chars</span>
+              <div class="action-buttons">
+                <button id="btn-text-clear" class="btn-secondary">Clear</button>
+                <button id="btn-text-analyze" class="btn-primary">
+                  <i data-lucide="play"></i>
+                  <span>Run Local Scan</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          
+          <div id="text-results-container" class="scanner-results-container card-surface empty-state-active">
+            
+            <div class="results-empty-state">
+              <i data-lucide="shield-question"></i>
+              <h3>Awaiting Input</h3>
+              <p>Enter text on the left and click "Run Local Scan" to perform client-side analysis.</p>
+            </div>
+
+            
+            <div class="results-loading-state hidden">
+              <div class="loading-spinner"></div>
+              <h3>Analyzing Text Content...</h3>
+              <p>Running local Transformer Model (MiniLM-L6) on WebAssembly thread</p>
+            </div>
+
+            
+            <div class="results-loaded-content hidden">
+              <div class="result-summary-header">
+                <h3>Scan Results</h3>
+                <span id="text-result-badge" class="result-badge danger">CRITICAL RISK</span>
+              </div>
+
+              
+              <div class="score-display-box">
+                <div class="risk-bar-container">
+                  <div class="risk-bar-labels">
+                    <span>Phishing Risk Score</span>
+                    <span id="text-risk-percentage">92%</span>
+                  </div>
+                  <div class="risk-bar-track">
+                    <div id="text-risk-fill" class="risk-bar-fill danger" style="width: 92%"></div>
+                  </div>
+                </div>
+
+                <div class="stat-pills-row">
+                  <div class="stat-pill">
+                    <span class="pill-label">Confidence</span>
+                    <span id="text-confidence-value" class="pill-val">94.7%</span>
+                  </div>
+                  <div class="stat-pill">
+                    <span class="pill-label">Primary Threat</span>
+                    <span id="text-threat-category" class="pill-val">Credential Theft</span>
+                  </div>
+                </div>
+              </div>
+
+              
+              <div class="highlight-container">
+                <h4>Flagged Suspicious Phrases</h4>
+                <div id="text-highlighted-output" class="highlighted-text-box">
+                  
+                </div>
+              </div>
+
+              
+              <div class="explanation-box">
+                <h4>Rule Explanation & Evidence</h4>
+                <ul id="text-evidence-list">
+                  
+                </ul>
+              </div>
+
+              
+              <div class="recommendation-box">
+                <div class="rec-header">
+                  <i data-lucide="shield-alert"></i>
+                  <h4>Safety Guidance</h4>
+                </div>
+                <p id="text-recommendation-content"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      
+      <section id="panel-url-scanner" class="app-panel hidden">
+        <div class="panel-header">
+          <div class="panel-header-badge">MODULE 02</div>
+          <h1 class="panel-title">URL Feature Analyzer</h1>
+          <p class="panel-subtitle">Evaluate links on-device to inspect formatting tricks, typosquatting, and redirects.</p>
+        </div>
+
+        <div class="scanner-layout">
+          
+          <div class="scanner-input-container card-surface">
+            <h3>Enter Destination Link</h3>
+            <input type="text" id="url-scan-input" placeholder="e.g. http://secure-login-paypal.com/signin" class="input-text-field">
+            
+            <div class="input-actions-bar">
+              <span class="text-counter">Offline heuristics check will run immediately</span>
+              <div class="action-buttons">
+                <button id="btn-url-clear" class="btn-secondary">Clear</button>
+                <button id="btn-url-analyze" class="btn-primary">
+                  <i data-lucide="globe"></i>
+                  <span>Scan Link</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          
+          <div id="url-results-container" class="scanner-results-container card-surface empty-state-active">
+            
+            <div class="results-empty-state">
+              <i data-lucide="globe"></i>
+              <h3>Awaiting URL Link</h3>
+              <p>Type or paste a website URL to extract safety markers locally.</p>
+            </div>
+
+            
+            <div class="results-loading-state hidden">
+              <div class="loading-spinner"></div>
+              <h3>Analyzing URL Metrics...</h3>
+              <p>Inspecting domain, typosquatting parameters, and security tokens</p>
+            </div>
+
+            
+            <div class="results-loaded-content hidden">
+              <div class="result-summary-header">
+                <h3>Domain Report</h3>
+                <span id="url-result-badge" class="result-badge danger">CRITICAL</span>
+              </div>
+
+              
+              <div class="score-display-box">
+                <div class="risk-bar-container">
+                  <div class="risk-bar-labels">
+                    <span>Aggregated Phishing Probability</span>
+                    <span id="url-risk-percentage">88%</span>
+                  </div>
+                  <div class="risk-bar-track">
+                    <div id="url-risk-fill" class="risk-bar-fill danger" style="width: 88%"></div>
+                  </div>
+                </div>
+              </div>
+
+              
+              <div class="features-list-box">
+                <h4>Extracted URL Security Parameters</h4>
+                <div class="features-grid">
+                  <div class="feature-row">
+                    <span class="feat-name">HTTPS Secure Protocol</span>
+                    <span id="feat-https" class="feat-status badge-success"><i data-lucide="check-circle-2"></i> Enabled</span>
+                  </div>
+                  <div class="feature-row">
+                    <span class="feat-name">Typosquatting Mimicry</span>
+                    <span id="feat-typo" class="feat-status badge-danger"><i data-lucide="x-circle"></i> High Risk</span>
+                  </div>
+                  <div class="feature-row">
+                    <span class="feat-name">Domain TLD Risk Score</span>
+                    <span id="feat-tld" class="feat-status badge-warning">Medium (.info)</span>
+                  </div>
+                  <div class="feature-row">
+                    <span class="feat-name">IP Hostname Masking</span>
+                    <span id="feat-ip" class="feat-status badge-success">Clean (No IP)</span>
+                  </div>
+                  <div class="feature-row">
+                    <span class="feat-name">URL Shortener Service</span>
+                    <span id="feat-short" class="feat-status badge-success">No Shortener</span>
+                  </div>
+                  <div class="feature-row">
+                    <span class="feat-name">Suspicious URL Keywords</span>
+                    <span id="feat-keywords" class="feat-status badge-danger">Detected</span>
+                  </div>
+                </div>
+              </div>
+
+              
+              <div class="explanation-box">
+                <h4>Heuristic Audit Details</h4>
+                <ul id="url-evidence-list">
+                  
+                </ul>
+              </div>
+
+              
+              <div class="recommendation-box">
+                <div class="rec-header">
+                  <i data-lucide="info"></i>
+                  <h4>Navigation Guidance</h4>
+                </div>
+                <p id="url-recommendation-content"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      
+      <section id="panel-screenshot-scanner" class="app-panel hidden">
+        <div class="panel-header">
+          <div class="panel-header-badge">MODULE 03</div>
+          <h1 class="panel-title">Screenshot OCR Scanner</h1>
+          <p class="panel-subtitle">Upload screenshot mockups of mobile alerts or fake pages to inspect overlaid text offline.</p>
+        </div>
+
+        <div class="scanner-layout">
+          
+          <div class="scanner-input-container card-surface">
+            <h3>Upload Image File</h3>
+            
+            <div id="dropzone" class="image-dropzone">
+              <i data-lucide="upload-cloud" class="dropzone-icon"></i>
+              <p class="dropzone-main-text">Drag and drop screenshot file here</p>
+              <p class="dropzone-sub-text">Supports PNG, JPG, JPEG (Processes on-device)</p>
+              <div class="btn-divider"><span>OR</span></div>
+              <button id="btn-browse-file" class="btn-secondary">Choose Local File</button>
+              <input type="file" id="screenshot-file-input" accept="image/*" class="hidden">
+            </div>
+
+            
+            <div id="screenshot-preview-container" class="screenshot-preview-box hidden">
+              <div class="preview-header">
+                <span>Selected File Preview</span>
+                <button id="btn-remove-screenshot" class="btn-icon-close"><i data-lucide="x"></i></button>
+              </div>
+              <div class="preview-img-wrapper">
+                <img id="screenshot-img-element" src="" alt="Screenshot source">
+                
+                <div id="ocr-highlight-overlays"></div>
+              </div>
+              <button id="btn-screenshot-analyze" class="btn-primary btn-full-width">
+                <i data-lucide="sparkles"></i>
+                <span>Perform OCR & Phishing Scan</span>
+              </button>
+            </div>
+
+            <div class="preset-images-section">
+              <p>Test with demo mock screenshots:</p>
+              <div class="presets-row">
+                <button class="btn-preset" data-preset="bank">Bank OTP Alert Mockup</button>
+                <button class="btn-preset" data-preset="delivery">Fake Parcel Delivery Mockup</button>
+                <button class="btn-preset" data-preset="normal">Legitimate Invoice Mockup</button>
+              </div>
+            </div>
+          </div>
+
+          
+          <div id="screenshot-results-container" class="scanner-results-container card-surface empty-state-active">
+            
+            <div class="results-empty-state">
+              <i data-lucide="image"></i>
+              <h3>Awaiting Image</h3>
+              <p>Upload a screenshot or click a demo mockup above to test OCR scanning.</p>
+            </div>
+
+            
+            <div class="results-loading-state hidden">
+              <div class="loading-spinner"></div>
+              <h3>Running Tesseract OCR Engine...</h3>
+              <p>Extracting text shapes locally using WebAssembly worker thread...</p>
+            </div>
+
+            
+            <div class="results-loaded-content hidden">
+              <div class="result-summary-header">
+                <h3>Screenshot Report</h3>
+                <span id="screenshot-result-badge" class="result-badge danger">CRITICAL</span>
+              </div>
+
+              
+              <div class="score-display-box">
+                <div class="risk-bar-container">
+                  <div class="risk-bar-labels">
+                    <span>Phishing Risk of Extracted Text</span>
+                    <span id="screenshot-risk-percentage">89%</span>
+                  </div>
+                  <div class="risk-bar-track">
+                    <div id="screenshot-risk-fill" class="risk-bar-fill danger" style="width: 89%"></div>
+                  </div>
+                </div>
+              </div>
+
+              
+              <div class="extracted-text-preview-box">
+                <h4>Extracted Plain Text (OCR Output)</h4>
+                <div id="screenshot-extracted-text" class="ocr-text-box">
+                  
+                </div>
+              </div>
+
+              
+              <div class="highlight-container">
+                <h4>Suspicious Extracted Elements</h4>
+                <div class="ocr-suspicious-pills" id="screenshot-suspicious-pills">
+                  
+                </div>
+              </div>
+
+              
+              <div class="recommendation-box">
+                <div class="rec-header">
+                  <i data-lucide="alert-triangle"></i>
+                  <h4>Safety Guidance</h4>
+                </div>
+                <p id="screenshot-recommendation-content"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      
+      <section id="panel-history" class="app-panel hidden">
+        <div class="panel-header-row">
+          <div class="panel-header">
+            <h1 class="panel-title">Local Scan Logs</h1>
+            <p class="panel-subtitle">History is saved strictly inside your browser's IndexedDB/LocalStorage storage.</p>
+          </div>
+          <div class="history-actions">
+            <button id="btn-history-export" class="btn-secondary">
+              <i data-lucide="download"></i>
+              <span>Export JSON</span>
+            </button>
+            <button id="btn-history-clear" class="btn-danger">
+              <i data-lucide="trash-2"></i>
+              <span>Clear History</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="history-filters-card card-surface">
+          <div class="filters-left">
+            <button class="btn-filter-tab active" data-filter="all">All Scans</button>
+            <button class="btn-filter-tab" data-filter="text">Text Only</button>
+            <button class="btn-filter-tab" data-filter="url">URLs Only</button>
+            <button class="btn-filter-tab" data-filter="screenshot">Screenshots Only</button>
+          </div>
+          <div class="search-input-wrapper">
+            <i data-lucide="search"></i>
+            <input type="text" id="history-search" placeholder="Search scan records...">
+          </div>
+        </div>
+
+        
+        <div class="history-list-container card-surface">
+          <div id="history-empty-state" class="history-empty-view">
+            <i data-lucide="folder-open"></i>
+            <h3>No Records Found</h3>
+            <p>Scans you run will be saved locally when phishing checks occur.</p>
+          </div>
+
+          <div id="history-table-wrapper" class="table-responsive hidden">
+            <table class="history-table">
+              <thead>
+                <tr>
+                  <th>Type</th>
+                  <th>Input Sample</th>
+                  <th>Result Level</th>
+                  <th>Confidence</th>
+                  <th>Date & Time</th>
+                  <th style="text-align: right">Action</th>
+                </tr>
+              </thead>
+              <tbody id="history-table-body">
+                
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      
+      <section id="panel-settings" class="app-panel hidden">
+        <div class="panel-header">
+          <h1 class="panel-title">Application Settings</h1>
+          <p class="panel-subtitle">Configure model execution, UI toggles, and client storage state.</p>
+        </div>
+
+        <div class="settings-grid">
+          
+          <div class="settings-card card-surface">
+            <div class="settings-card-header">
+              <i data-lucide="brain-circuit" class="text-pink"></i>
+              <div>
+                <h3>AI Model Selection</h3>
+                <p>Choose which client-side model handles text processing.</p>
+              </div>
+            </div>
+            <div class="settings-card-body">
+              <div class="select-group">
+                <label for="settings-model-select">Active ONNX Transformer Model</label>
+                <select id="settings-model-select" class="select-field">
+                  <option value="minilm">TinyBERT-Phish-L4 (14.2 MB - Recommended, Fast)</option>
+                  <option value="distilbert">DistilBERT-Phishing-V3 (66.5 MB - High Accuracy, Slower)</option>
+                  <option value="heuristics">Offline Heuristics Engine Only (0 MB - Instantaneous)</option>
+                </select>
+              </div>
+              <div class="setting-toggle-row">
+                <div>
+                  <strong>WebGPU Hardware Acceleration</strong>
+                  <p>Uses browser GPU cores for AI calculations if supported.</p>
+                </div>
+                <label class="switch-toggle">
+                  <input type="checkbox" id="settings-toggle-webgpu" checked>
+                  <span class="slider-round"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          
+          <div class="settings-card card-surface">
+            <div class="settings-card-header">
+              <i data-lucide="palette" class="text-sage"></i>
+              <div>
+                <h3>Theme Customization</h3>
+                <p>Tailor the visual representation of GarudaAI.</p>
+              </div>
+            </div>
+            <div class="settings-card-body">
+              <div class="theme-choices-grid">
+                <button class="btn-theme-choice active" data-theme="blossom">
+                  <span class="color-preview preview-pink"></span>
+                  <strong>Blossom Pink</strong>
+                  <span>Soft & Approachable</span>
+                </button>
+                <button class="btn-theme-choice" data-theme="sage">
+                  <span class="color-preview preview-sage"></span>
+                  <strong>Sage Mint</strong>
+                  <span>Calming & Organic</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          
+          <div class="settings-card card-surface">
+            <div class="settings-card-header">
+              <i data-lucide="database" class="text-pink"></i>
+              <div>
+                <h3>Local Storage & Cache</h3>
+                <p>Manage offline assets stored by this Progressive Web App.</p>
+              </div>
+            </div>
+            <div class="settings-card-body">
+              <div class="cache-stat-item">
+                <span>Cached Model Files (Browser Cache)</span>
+                <strong id="cache-model-size">14.2 MB</strong>
+              </div>
+              <div class="cache-stat-item">
+                <span>IndexedDB Scan Log Count</span>
+                <strong id="cache-log-count">0 items</strong>
+              </div>
+              <div class="action-buttons-row">
+                <button id="btn-clear-model-cache" class="btn-secondary">Clear Model Cache</button>
+                <button id="btn-factory-reset" class="btn-danger">Wipe App Data</button>
+              </div>
+            </div>
+          </div>
+
+          
+          <div class="settings-card card-surface">
+            <div class="settings-card-header">
+              <i data-lucide="download-cloud" class="text-sage"></i>
+              <div>
+                <h3>Install PWA Client</h3>
+                <p>Run GarudaAI as a standalone offline desktop application.</p>
+              </div>
+            </div>
+            <div class="settings-card-body">
+              <p class="settings-info-text">Installing creates a shortcut, enables full background service worker caching, and provides offline access directly from your applications launcher.</p>
+              <button id="btn-install-pwa" class="btn-primary btn-full-width">
+                <i data-lucide="plus-circle"></i>
+                <span>Install GarudaAI</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      
+      <section id="panel-privacy" class="app-panel hidden">
+        <div class="panel-header">
+          <h1 class="panel-title">Privacy Architecture & Technical Specs</h1>
+          <p class="panel-subtitle">Read how GarudaAI evaluates content locally without network leak hazards.</p>
+        </div>
+
+        <div class="privacy-layout-grid">
+          <div class="privacy-main-column">
+            <div class="article-card card-surface">
+              <h2>The "Zero Cloud" Privacy Pact</h2>
+              <p>Traditional anti-phishing products inspect links or emails by sending them to web APIs. If the user is viewing confidential records, financial statements, or personal chats, this leaks sensitive information to service vendors.</p>
+              
+              <blockquote class="privacy-quote">
+                "GarudaAI is built on the principle that threat inspection should never require information disclosure. All heuristics, OCR character mapping, and Transformer classification tasks are executed exclusively inside the browser environment."
+              </blockquote>
+
+              <h3>How the Scanning Pipeline Operates Offline:</h3>
+              <div class="specs-flow-horizontal">
+                <div class="spec-node">
+                  <i data-lucide="file-input"></i>
+                  <h4>1. Input Hook</h4>
+                  <p>Characters staged strictly inside the DOM.</p>
+                </div>
+                <div class="spec-arrow"><i data-lucide="arrow-right"></i></div>
+                <div class="spec-node">
+                  <i data-lucide="binary"></i>
+                  <h4>2. ONNX Inference</h4>
+                  <p>MiniLM model executes on client JS thread.</p>
+                </div>
+                <div class="spec-arrow"><i data-lucide="arrow-right"></i></div>
+                <div class="spec-node">
+                  <i data-lucide="file-check"></i>
+                  <h4>3. Local Report</h4>
+                  <p>Risk values calculated and loaded in view.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="article-card card-surface">
+              <h2>FAQ</h2>
+              <div class="faq-item">
+                <h4>Q: Is my data safe from browser extensions?</h4>
+                <p>Yes. By running strictly inside standard sandboxed memory, GarudaAI doesn't transmit network traffic that background monitors could intercept. Data resides exclusively in temporary JS variables or your sandbox IndexedDB.</p>
+              </div>
+              <div class="faq-item">
+                <h4>Q: How are new phishing patterns updated offline?</h4>
+                <p>The Service Worker updates heuristics rules and local models whenever the application is opened online. Once the models are refreshed, they remain cached for fully offline verification checks.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="privacy-sidebar-column">
+            <div class="specs-status-card card-surface">
+              <h3>System Capabilities Check</h3>
+              
+              <div class="capability-item">
+                <div class="cap-info">
+                  <strong>IndexedDB Storage API</strong>
+                  <span>Required for local logs persistence</span>
+                </div>
+                <span class="cap-status active"><i data-lucide="check"></i> Available</span>
+              </div>
+
+              <div class="capability-item">
+                <div class="cap-info">
+                  <strong>WebAssembly (WASM)</strong>
+                  <span>Required for local OCR & model runtime</span>
+                </div>
+                <span class="cap-status active"><i data-lucide="check"></i> Available</span>
+              </div>
+
+              <div class="capability-item">
+                <div class="cap-info">
+                  <strong>WebGPU Execution</strong>
+                  <span>Accelerates transformer model processing</span>
+                </div>
+                <span class="cap-status warning"><i data-lucide="alert-circle"></i> WASM Fallback</span>
+              </div>
+
+              <div class="capability-item">
+                <div class="cap-info">
+                  <strong>Service Worker API</strong>
+                  <span>Required for full offline app operation</span>
+                </div>
+                <span class="cap-status active"><i data-lucide="check"></i> Running</span>
+              </div>
+            </div>
+
+            <div class="specs-status-card card-surface spec-details-tint">
+              <h3>Model Specs</h3>
+              <ul class="spec-details-list">
+                <li><strong>Text Classifier:</strong> TinyBERT-Phish-L4</li>
+                <li><strong>Vocabulary Size:</strong> 30,522 tokens</li>
+                <li><strong>Disk Size:</strong> 14.2 MB (Compressed)</li>
+                <li><strong>OCR Engine:</strong> Tesseract.js WASM Core</li>
+                <li><strong>IndexedDB Limit:</strong> 250 MB</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

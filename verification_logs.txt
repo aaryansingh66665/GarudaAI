@@ -1,0 +1,26 @@
+Verification Logs
+=================
+
+Checklist Results:
+- [x] Navigate to localhost:5173 and check AI status badge (Badge in UI shows "AI Model Ready" on Dashboard card, bottom-left says "System Ready")
+- [x] Click the Enter/Get Started button
+- [x] Go to Text Scanner
+- [x] Enter phishing text and run local scan ("Urgent: Your account is locked...")
+- [x] Wait for AI classification and take screenshot (Successfully classified as 100% Risk, 95% Confidence, Banking Scam)
+- [x] Verify AI status badge shows 'AI: Ready' (Confirmed "AI Model Ready" status badge and offline status)
+
+Console Log Outputs:
+--------------------
+[log][:57:29] Start to fetch params
+[log][:57:29] Loading model from cache[1/8]: 65MB loaded. 24% completed, 1 secs elapsed.
+[log][:57:29] Loading model from cache[2/8]: 97MB loaded. 36% completed, 1 secs elapsed.
+[log][:57:29] Loading model from cache[3/8]: 129MB loaded. 48% completed, 1 secs elapsed.
+[log][:57:29] Loading model from cache[4/8]: 161MB loaded. 60% completed, 1 secs elapsed.
+[log][:57:29] Loading model from cache[5/8]: 192MB loaded. 72% completed, 1 secs elapsed.
+[log][:57:29] Loading model from cache[6/8]: 220MB loaded. 82% completed, 2 secs elapsed.
+[log][:57:29] Loading model from cache[7/8]: 252MB loaded. 94% completed, 2 secs elapsed.
+[log][:57:29] Loading model from cache[8/8]: 266MB loaded. 100% completed, 2 secs elapsed.
+[log][:57:29] Loading GPU shader modules[4/4]: 100% completed, 1 secs elapsed.
+[log][:57:29] Finish loading on WebGPU - intel
+[log][:57:31] Running text classification
+[log][:57:32] Classification complete: Phishing (100% risk)
