@@ -104,7 +104,7 @@ To optimize for various device capacities (low-memory mobiles vs. high-end deskt
     *   **Clear Model Cache:** Deletes stored model binaries to free local disk space.
     *   **Wipe App Data:** Triggers a complete factory reset, purging all local IndexedDB logs, settings, and cached assets.
 *   **Install PWA Client:**
-    *   **Standalone Offline App Installer:** Integrates with the browser's install prompts to save GarudaAI as a standalone desktop/mobile PWA. This enables launching from the OS apps drawer and registers a background Service Worker to handle offline assets caching automatically.
+    *   **Standalone Offline App Installer (*Upcoming Feature*):** Designed to integrate with the browser's install prompts to save GarudaAI as a standalone desktop/mobile PWA. *(Note: The "Install GarudaAI" button in the settings panel is currently non-functional and this feature will be fully introduced in a future update).*
 
 ---
 
