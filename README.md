@@ -8,6 +8,7 @@
 **GarudaAI** is a privacy-first, offline-first anti-phishing Progressive Web App (PWA) designed to detect text, URL, and screenshot phishing attempts entirely on-device. By running local heuristics and sandboxed machine learning models inside the browser, GarudaAI ensures user data is 100% private and never leaves their machine.
 
 *   **Live Web Deployment:** [https://garuda-ai-psi.vercel.app/](https://garuda-ai-psi.vercel.app/)
+*   **Demo video:**
 *   **Aesthetic Theme:** *Blossom & Sage* pastel theme (soft warm cream `#FCFAF7` background with rose pink accents and sage green success indicators).
 
 ---
