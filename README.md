@@ -2,8 +2,8 @@
 
 [![Deployment](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://garuda-ai-psi.vercel.app/)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue?style=for-the-badge)](LICENSE)
-[![Category](https://img.shields.io/badge/Category-Browser--based%20AI-orange?style=for-the-badge)](https://github.com/sachanarchita96-lgtm/GARUDA-SHIELD)
-[![Track](https://img.shields.io/badge/Track-Security%20%26%20Privacy-green?style=for-the-badge)](https://github.com/sachanarchita96-lgtm/GARUDA-SHIELD)
+[![Category](https://img.shields.io/badge/Category-Browser--based%20AI-orange?style=for-the-badge)](https://github.com/aaryansingh66665/GarudaAI)
+[![Track](https://img.shields.io/badge/Track-Security%20%26%20Privacy-green?style=for-the-badge)](https://github.com/aaryansingh66665/GarudaAI)
 
 **GarudaAI** is a privacy-first, offline-first anti-phishing Progressive Web App (PWA) designed to detect text, URL, and screenshot phishing attempts entirely on-device. By running local heuristics and sandboxed machine learning models inside the browser, GarudaAI ensures user data is 100% private and never leaves their machine.
 
@@ -116,8 +116,8 @@ To optimize for various device capacities (low-memory mobiles vs. high-end deskt
 
 ### 1. Clone & Navigate
 ```bash
-git clone https://github.com/sachanarchita96-lgtm/GARUDA-SHIELD.git
-cd GARUDA-SHIELD
+git clone https://github.com/aaryansingh66665/GarudaAI.git
+cd GarudaAI
 ```
 
 ### 2. Install Dependencies
