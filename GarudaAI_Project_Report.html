@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GarudaAI — Project Report</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+
+    :root {
+      --rose:    #BE123C;
+      --rose-lt: #FFF1F2;
+      --rose-md: #FDA4AF;
+      --sage:    #065F46;
+      --sage-lt: #ECFDF5;
+      --sage-md: #6EE7B7;
+      --ink:     #1E293B;
+      --gray:    #64748B;
+      --gray-lt: #F8FAFC;
+      --border:  #E2E8F0;
+      --yellow:  #FEF3C7;
+      --yellow-dk:#92400E;
+      --blue-lt: #EFF6FF;
+      --blue:    #1D4ED8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #fff;
+      color: var(--ink);
+      font-size: 10.5pt;
+      line-height: 1.7;
+    }
+
+    /* ── COVER PAGE (LANDING PAGE STYLED) ── */
+    .cover {
+      page-break-after: always;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: #FCFAF7;
+      padding: 50px 30px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      font-family: 'Outfit', sans-serif;
+    }
+    .landing-bg-decorations {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .glow-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.35;
+    }
+    .orb-pink {
+      width: 400px;
+      height: 400px;
+      background-color: #FED7AA; 
+      top: -100px;
+      right: -50px;
+    }
+    .orb-sage {
+      width: 500px;
+      height: 500px;
+      background-color: #FCE7F3; 
+      bottom: -150px;
+      left: -100px;
+    }
+    .logo-badge-container {
+      margin-bottom: 20px;
+      z-index: 1;
+    }
+    .logo-shield-wrapper {
+      position: relative;
+      width: 90px;
+      height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+    }
+    .shield-icon-svg {
+      width: 48px;
+      height: 48px;
+      color: #065F46;
+      z-index: 2;
+    }
+    .shield-pulse {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: #ECFDF5;
+      border-radius: 50%;
+      z-index: 1;
+      border: 1px solid #6EE7B7;
+      box-shadow: 0 0 20px rgba(110, 231, 183, 0.35);
+    }
+    .landing-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 38pt;
+      font-weight: 800;
+      color: #111827;
+      line-height: 1.1;
+      margin-bottom: 8px;
+      z-index: 1;
+      letter-spacing: -0.03em;
+    }
+    .landing-subtitle {
+      font-family: 'Outfit', sans-serif;
+      font-size: 14pt;
+      color: #6B7280;
+      margin-bottom: 24px;
+      font-weight: 400;
+      z-index: 1;
+    }
+    .privacy-badge {
+      background-color: #FFFBEB; 
+      color: #B45309;
+      border: 1px solid #FDE68A;
+      padding: 8px 16px;
+      border-radius: 9999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 9pt;
+      font-weight: 500;
+      margin-bottom: 28px;
+      max-width: 600px;
+      z-index: 1;
+    }
+    .privacy-badge svg {
+      width: 14px;
+      height: 14px;
+      stroke: currentColor;
+    }
+    .report-badge-hero {
+      background-color: #065F46;
+      color: white;
+      padding: 12px 28px;
+      font-size: 10pt;
+      font-weight: 700;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(6, 95, 70, 0.05), 0 0 20px rgba(110, 231, 183, 0.35);
+      margin-bottom: 36px;
+      z-index: 1;
+      letter-spacing: 0.05em;
+    }
+    .landing-features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      width: 100%;
+      max-width: 750px;
+      margin-bottom: 36px;
+      z-index: 1;
+    }
+    .feature-mini-card {
+      background-color: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: left;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+    .feature-mini-card svg {
+      color: #065F46;
+      margin-bottom: 8px;
+      width: 20px;
+      height: 20px;
+    }
+    .feature-mini-card h4 {
+      font-size: 10.5pt;
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: #1E293B;
+    }
+    .feature-mini-card p {
+      font-size: 8.5pt;
+      color: #64748B;
+      line-height: 1.5;
+      margin: 0;
+    }
+    .cover-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px 30px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px 24px;
+      text-align: left;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+      width: 100%;
+      max-width: 650px;
+      z-index: 1;
+      margin-top: 10px;
+    }
+    .meta-item label { font-size: 7.5pt; font-weight: 600; color: var(--gray); text-transform: uppercase; letter-spacing: 0.8px; display: block; margin-bottom: 2px; }
+    .meta-item span { font-size: 9.5pt; font-weight: 500; color: var(--ink); }
+
+    /* ── PRINT LAYOUT ── */
+    @media print {
+      .cover { min-height: auto; padding: 40px 30px; }
+      section { page-break-inside: avoid; }
+      .page-break { page-break-before: always; }
+    }
+
+    /* ── BODY LAYOUT ── */
+    .report-body {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 48px 48px;
+    }
+
+    /* ── SECTION HEADERS ── */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 24px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--border);
+    }
+    .section-num {
+      width: 38px; height: 38px;
+      background: var(--rose);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      color: white;
+      font-size: 14pt;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .section-num.green { background: var(--sage); }
+    .section-num.blue  { background: var(--blue); }
+    .section-num.amber { background: #D97706; }
+    .section-num.purple{ background: #7C3AED; }
+    .section-title { font-size: 18pt; font-weight: 700; color: var(--ink); }
+    .section-subtitle { font-size: 9.5pt; color: var(--gray); font-weight: 400; margin-top: 2px; }
+
+    section { margin-bottom: 52px; }
+
+    /* ── OVERVIEW CARDS ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .card {
+      background: var(--gray-lt);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .card-icon { font-size: 22pt; margin-bottom: 8px; }
+    .card h4 { font-size: 10pt; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
+    .card p  { font-size: 9pt; color: var(--gray); line-height: 1.6; }
+
+    /* ── PROSE ── */
+    p { margin-bottom: 12px; color: var(--ink); }
+    ul, ol { padding-left: 20px; margin-bottom: 12px; }
+    li { margin-bottom: 6px; font-size: 10pt; }
+    strong { font-weight: 600; }
+
+    /* ── FUNCTION CARDS ── */
+    .fn-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+    .fn-card {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .fn-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 20px;
+      background: var(--gray-lt);
+      border-bottom: 1px solid var(--border);
+    }
+    .fn-icon {
+      width: 34px; height: 34px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16pt;
+      flex-shrink: 0;
+    }
+    .fn-title { font-size: 11pt; font-weight: 700; color: var(--ink); }
+    .fn-sub   { font-size: 8.5pt; color: var(--gray); }
+    .fn-body  { padding: 16px 20px; }
+    .fn-body p { font-size: 9.5pt; margin-bottom: 10px; }
+    .fn-body ul li { font-size: 9.5pt; }
+
+    .tag {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 999px;
+      font-size: 8pt;
+      font-weight: 600;
+      margin-right: 6px;
+      margin-bottom: 6px;
+    }
+    .tag-rose   { background: var(--rose-lt);  color: var(--rose); }
+    .tag-sage   { background: var(--sage-lt);  color: var(--sage); }
+    .tag-blue   { background: var(--blue-lt);  color: var(--blue); }
+    .tag-amber  { background: var(--yellow);   color: var(--yellow-dk); }
+    .tag-purple { background: #F5F3FF;          color: #7C3AED; }
+
+    /* ── CODE ── */
+    code {
+      font-family: 'Fira Code', monospace;
+      font-size: 8.5pt;
+      background: #F1F5F9;
+      padding: 1px 6px;
+      border-radius: 4px;
+      color: #C7253E;
+    }
+    pre {
+      background: #0F172A;
+      color: #E2E8F0;
+      padding: 16px 20px;
+      border-radius: 10px;
+      font-family: 'Fira Code', monospace;
+      font-size: 8.5pt;
+      line-height: 1.7;
+      overflow: auto;
+      margin: 10px 0 16px;
+    }
+    pre .kw  { color: #A78BFA; }
+    pre .str { color: #86EFAC; }
+    pre .cmt { color: #64748B; }
+    pre .fn  { color: #67E8F9; }
+
+    /* ── PROBLEM / SOLUTION TABLE ── */
+    .ps-table { width: 100%; border-collapse: collapse; margin-bottom: 16px; }
+    .ps-table th {
+      background: var(--ink);
+      color: white;
+      padding: 10px 14px;
+      font-size: 9pt;
+      font-weight: 600;
+      text-align: left;
+    }
+    .ps-table th:first-child { border-radius: 8px 0 0 0; }
+    .ps-table th:last-child  { border-radius: 0 8px 0 0; }
+    .ps-table td {
+      padding: 12px 14px;
+      font-size: 9pt;
+      vertical-align: top;
+      border-bottom: 1px solid var(--border);
+    }
+    .ps-table tr:nth-child(even) td { background: var(--gray-lt); }
+    .ps-table .col-num { width: 36px; font-weight: 700; color: var(--rose); }
+    .ps-table .col-problem { width: 28%; }
+    .ps-table .col-cause   { width: 28%; }
+    .ps-table .col-solution{ width: 38%; }
+
+    .chip {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 7.5pt;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .chip-red    { background: #FEE2E2; color: #991B1B; }
+    .chip-green  { background: var(--sage-lt); color: var(--sage); }
+    .chip-yellow { background: var(--yellow);  color: var(--yellow-dk); }
+
+    /* ── ARCHITECTURE DIAGRAM ── */
+    .arch-box {
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 14px;
+    }
+    .arch-row {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      margin-bottom: 10px;
+    }
+    .arch-node {
+      flex: 1;
+      background: var(--gray-lt);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      text-align: center;
+      font-size: 9pt;
+      font-weight: 600;
+    }
+    .arch-node.rose   { background: var(--rose-lt); border-color: var(--rose-md); color: var(--rose); }
+    .arch-node.sage   { background: var(--sage-lt); border-color: var(--sage-md); color: var(--sage); }
+    .arch-node.blue   { background: var(--blue-lt); border-color: #93C5FD;        color: var(--blue); }
+    .arch-node.amber  { background: var(--yellow);  border-color: #FCD34D;        color: var(--yellow-dk); }
+    .arch-arrow { display: flex; align-items: center; padding: 0 8px; color: var(--gray); font-size: 14pt; }
+
+    /* ── TEAM SECTION ── */
+    .team-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .team-card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .team-avatar {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18pt;
+      flex-shrink: 0;
+      background: var(--rose-lt);
+    }
+    .team-name  { font-size: 11pt; font-weight: 700; margin-bottom: 2px; }
+    .team-role  { font-size: 8.5pt; color: var(--rose); font-weight: 600; margin-bottom: 6px; }
+    .team-desc  { font-size: 9pt;  color: var(--gray); line-height: 1.5; }
+
+    /* ── FOOTER ── */
+    .report-footer {
+      margin-top: 60px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 8.5pt;
+      color: var(--gray);
+    }
+    .report-footer a { color: var(--rose); text-decoration: none; }
+
+    /* ── HORIZONTAL RULE ── */
+    hr { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
+
+    /* ── CALLOUT ── */
+    .callout {
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin: 14px 0;
+      font-size: 9.5pt;
+      line-height: 1.6;
+    }
+    .callout-rose   { background: var(--rose-lt); border-left: 4px solid var(--rose); }
+    .callout-sage   { background: var(--sage-lt); border-left: 4px solid var(--sage); }
+    .callout-amber  { background: var(--yellow);  border-left: 4px solid #D97706; }
+    .callout-blue   { background: var(--blue-lt); border-left: 4px solid var(--blue); }
+
+    /* ── FLOW STEPS ── */
+    .flow { display: flex; flex-direction: column; gap: 10px; }
+    .flow-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .flow-dot {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--rose);
+      color: white;
+      font-size: 10pt;
+      font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .flow-dot.sage { background: var(--sage); }
+    .flow-text h5 { font-size: 10pt; font-weight: 600; margin-bottom: 2px; }
+    .flow-text p  { font-size: 9pt;  color: var(--gray); margin: 0; }
+
+    h2.sub { font-size: 13pt; font-weight: 700; margin: 24px 0 10px; color: var(--ink); }
+    h3.sub { font-size: 11pt; font-weight: 600; margin: 18px 0 8px; color: var(--ink); }
+
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+    @media print {
+      .report-body { padding: 30px; }
+      .two-col { grid-template-columns: 1fr; }
+      .card-grid { grid-template-columns: repeat(3, 1fr); }
+      .team-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════
+     COVER PAGE
+════════════════════════════════════════ -->
+<div class="cover">
+  <!-- Background Glow Orbs -->
+  <div class="landing-bg-decorations">
+    <div class="glow-orb orb-pink"></div>
+    <div class="glow-orb orb-sage"></div>
+  </div>
+
+  <!-- Logo and Shield -->
+  <div class="logo-badge-container">
+    <div class="logo-shield-wrapper">
+      <svg class="shield-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        <path d="m9 12 2 2 4-4"/>
+      </svg>
+      <div class="shield-pulse"></div>
+    </div>
+  </div>
+
+  <!-- Title & Subtitle -->
+  <h1 class="landing-title">GarudaAI</h1>
+  <p class="landing-subtitle">Offline AI-Powered Phishing Detection System</p>
+
+  <!-- Privacy Warning Badge -->
+  <div class="privacy-badge">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+      <line x1="12" y1="9" x2="12" y2="13"/>
+      <line x1="12" y1="17" x2="12.01" y2="17"/>
+    </svg>
+    <span>100% Privacy First — All scans run strictly on-device inside your browser</span>
+  </div>
+
+  <!-- Static Action/Report Badge -->
+  <div class="report-badge-hero">
+    COMPLETE PROJECT REPORT &amp; TECHNICAL DOCUMENTATION
+  </div>
+
+  <!-- Features Grid -->
+  <div class="landing-features-grid">
+    <div class="feature-mini-card">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="1" y1="1" x2="23" y2="23"/>
+        <path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.5"/>
+        <path d="M5 12.5a10.94 10.94 0 0 1 5.17-2.39"/>
+        <path d="M10.71 5.05A16 16 0 0 1 22.58 9"/>
+        <path d="M1.42 9a15.91 15.91 0 0 1 4.7-2.88"/>
+        <path d="M8.53 16.11a6 6 0 0 1 6.95 0"/>
+        <line x1="12" y1="20" x2="12.01" y2="20"/>
+      </svg>
+      <h4>Fully Offline</h4>
+      <p>No APIs or servers. Safe for sensitive data.</p>
+    </div>
+    <div class="feature-mini-card">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="4" y="4" width="16" height="16" rx="2" ry="2"/>
+        <rect x="9" y="9" width="6" height="6"/>
+        <line x1="9" y1="1" x2="9" y2="4"/>
+        <line x1="15" y1="1" x2="15" y2="4"/>
+        <line x1="9" y1="20" x2="9" y2="23"/>
+        <line x1="15" y1="20" x2="15" y2="23"/>
+        <line x1="20" y1="9" x2="23" y2="9"/>
+        <line x1="20" y1="15" x2="23" y2="15"/>
+        <line x1="1" y1="9" x2="4" y2="9"/>
+        <line x1="1" y1="15" x2="4" y2="15"/>
+      </svg>
+      <h4>Local AI</h4>
+      <p>Heuristics + client-side models inside browser.</p>
+    </div>
+    <div class="feature-mini-card">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <ellipse cx="12" cy="5" rx="9" ry="3"/>
+        <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+        <path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/>
+      </svg>
+      <h4>Zero Telemetry</h4>
+      <p>IndexedDB local storage. Clear data anytime.</p>
+    </div>
+  </div>
+
+  <!-- Report Metadata -->
+  <div class="cover-meta">
+    <div class="meta-item">
+      <label>Project Name</label>
+      <span>GarudaAI — Offline Phishing Guardian</span>
+    </div>
+    <div class="meta-item">
+      <label>Category</label>
+      <span>Defensive Cybersecurity Tool</span>
+    </div>
+    <div class="meta-item">
+      <label>Live URL</label>
+      <span>garuda-ai-psi.vercel.app</span>
+    </div>
+    <div class="meta-item">
+      <label>Repository</label>
+      <span>github.com/aaryansingh66665/GarudaAI</span>
+    </div>
+    <div class="meta-item">
+      <label>Tech Stack</label>
+      <span>Vite · WebLLM · Tesseract.js · LocalForage</span>
+    </div>
+    <div class="meta-item">
+      <label>License</label>
+      <span>Apache 2.0</span>
+    </div>
+    <div class="meta-item">
+      <label>Team Lead</label>
+      <span>Aryan</span>
+    </div>
+    <div class="meta-item">
+      <label>Date</label>
+      <span>July 2026</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     REPORT BODY
+════════════════════════════════════════ -->
+<div class="report-body">
+
+  <!-- ── 1. EXECUTIVE OVERVIEW ── -->
+  <section>
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <div>
+        <div class="section-title">Executive Overview</div>
+        <div class="section-subtitle">What is GarudaAI and why does it exist?</div>
+      </div>
+    </div>
+
+    <p>
+      <strong>GarudaAI</strong> is a <em>privacy-first, offline-first</em> anti-phishing Progressive Web App (PWA) that detects phishing attempts entirely inside the user's browser — no servers, no cloud APIs, no telemetry. Every computation runs locally on the device's CPU/GPU.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon">🔒</div>
+        <h4>Zero Telemetry</h4>
+        <p>User inputs are never transmitted to any external server. All data stays inside the browser.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📴</div>
+        <h4>Offline Capable</h4>
+        <p>Once models are downloaded, GarudaAI can operate in fully air-gapped environments.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🤖</div>
+        <h4>Local AI Inference</h4>
+        <p>Uses WebGPU-accelerated LLM and WASM-compiled OCR for on-device intelligence.</p>
+      </div>
+    </div>
+
+    <h2 class="sub">The Problem</h2>
+    <p>Traditional anti-phishing tools require users to upload sensitive content (messages, screenshots, links) to cloud servers — exposing private data, requiring internet connectivity, and adding latency. GarudaAI solves all three problems by moving every computation to the client.</p>
+
+    <h2 class="sub">Key Capabilities at a Glance</h2>
+    <ul>
+      <li><strong>Text Scanner</strong> — Paste any suspicious message or email text for AI-powered phishing analysis.</li>
+      <li><strong>URL Inspector</strong> — Dual-layer (heuristic + LLM) analysis of suspicious URLs.</li>
+      <li><strong>Screenshot OCR Scanner</strong> — Upload images; Tesseract.js extracts text, which the LLM then classifies.</li>
+      <li><strong>Offline Scan History</strong> — IndexedDB-backed history with search, filter, and CSV export.</li>
+      <li><strong>Settings Panel</strong> — Model switching, theme switching, cache management, and factory reset.</li>
+    </ul>
+  </section>
+
+  <!-- ── 2. SYSTEM ARCHITECTURE ── -->
+  <section class="page-break">
+    <div class="section-header">
+      <div class="section-num green">2</div>
+      <div>
+        <div class="section-title">System Architecture</div>
+        <div class="section-subtitle">How all components connect</div>
+      </div>
+    </div>
+
+    <div class="arch-box">
+      <div class="arch-row">
+        <div class="arch-node rose">👤 User Input<br/><small>Text / URL / Screenshot</small></div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-node blue">🌐 index.html<br/><small>Main App Shell (Vite PWA)</small></div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-node">📦 app.js<br/><small>UI Controller &amp; DOM Coordinator</small></div>
+      </div>
+      <div class="arch-row">
+        <div class="arch-node amber">🔍 Layer 1<br/><small>Local Heuristics (extractUrlHeuristics)</small></div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-node sage">🤖 ai-service.js<br/><small>WebLLM + Tesseract Wrapper</small></div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-node">⚙️ ai-worker.js<br/><small>Web Worker (Isolated Thread)</small></div>
+      </div>
+      <div class="arch-row">
+        <div class="arch-node">💾 LocalForage<br/><small>IndexedDB Scan History</small></div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-node sage">📊 Results UI<br/><small>Risk Score, Evidence, Recommendation</small></div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-node rose">📋 History Panel<br/><small>Filterable, Searchable, Exportable</small></div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div>
+        <h3 class="sub">Source File Breakdown</h3>
+        <ul>
+          <li><code>index.html</code> — Full single-page app layout (~37 KB), all panels defined here.</li>
+          <li><code>src/app.js</code> — Main controller (841 lines). Wires UI events, calls AI, renders results, manages history.</li>
+          <li><code>src/ai-service.js</code> — Thin wrapper that creates the WebLLM engine in a Web Worker and exposes <code>analyzeTextWithAI</code>, <code>analyzeUrlWithAI</code>, <code>extractTextFromImage</code>.</li>
+          <li><code>src/ai-worker.js</code> — The Web Worker host that boots <code>MLCEngine</code> and passes messages from the main thread.</li>
+          <li><code>src/style.css</code> — Design system (~42 KB) with CSS variables for both Blossom Pink and Sage Mint themes.</li>
+          <li><code>vite.config.js</code> — Vite + VitePWA config, service worker generation.</li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="sub">Dependency Stack</h3>
+        <ul>
+          <li><strong>@mlc-ai/web-llm ^0.2.84</strong> — WebGPU LLM runtime (Qwen2.5-0.5B).</li>
+          <li><strong>tesseract.js ^7.0.0</strong> — WASM OCR engine for image-to-text.</li>
+          <li><strong>localforage ^1.10.0</strong> — IndexedDB abstraction for offline history persistence.</li>
+          <li><strong>lucide ^1.24.0</strong> — Icon library, rendered via <code>lucide.createIcons()</code>.</li>
+          <li><strong>vite ^8.1.4</strong> — Build tool &amp; dev server.</li>
+          <li><strong>vite-plugin-pwa ^1.3.0</strong> — Service worker + manifest generation.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 3. FUNCTION REFERENCE ── -->
+  <section class="page-break">
+    <div class="section-header">
+      <div class="section-num blue">3</div>
+      <div>
+        <div class="section-title">Complete Function Reference</div>
+        <div class="section-subtitle">Every major function explained with purpose, input/output, and code context</div>
+      </div>
+    </div>
+
+    <div class="fn-grid">
+
+      <!-- initAI -->
+      <div class="fn-card">
+        <div class="fn-header">
+          <div class="fn-icon" style="background:#EFF6FF">🚀</div>
+          <div>
+            <div class="fn-title">initAI()</div>
+            <div class="fn-sub">ai-service.js · Async · Singleton pattern</div>
+          </div>
+          <span class="tag tag-blue" style="margin-left:auto">AI Layer</span>
+        </div>
+        <div class="fn-body">
+          <p><strong>Purpose:</strong> Boots the WebLLM engine inside a Web Worker. Uses a singleton guard so the model is loaded only once across the entire session. Fires on DOMContentLoaded in the background so the model is warm before the user submits their first scan.</p>
+          <p><strong>How it works:</strong></p>
+          <pre><span class="kw">export async function</span> <span class="fn">initAI</span>() {
+  <span class="kw">if</span> (engine) <span class="kw">return</span> engine; <span class="cmt">// singleton guard</span>
+  engine = <span class="kw">await</span> CreateWebWorkerMLCEngine(
+    <span class="kw">new</span> Worker(<span class="str">'./ai-worker.js'</span>, { type: <span class="str">"module"</span> }),
+    <span class="str">"Qwen2.5-0.5B-Instruct-q4f16_1-MLC"</span>,
+    { initProgressCallback }
+  );
+  <span class="kw">return</span> engine;
+}</pre>
+          <p><strong>Model:</strong> <code>Qwen2.5-0.5B-Instruct-q4f16_1-MLC</code> — a 4-bit quantized 500M-parameter model cached in browser Cache Storage after first download.</p>
+        </div>
+      </div>
+
+      <!-- analyzeTextWithAI -->
+      <div class="fn-card">
+        <div class="fn-header">
+          <div class="fn-icon" style="background:#FFF1F2">📝</div>
+          <div>
+            <div class="fn-title">analyzeTextWithAI(text)</div>
+            <div class="fn-sub">ai-service.js · Async · Returns structured JSON risk report</div>
+          </div>
+          <span class="tag tag-rose" style="margin-left:auto">Text Scanner</span>
+        </div>
+        <div class="fn-body">
+          <p><strong>Purpose:</strong> Sends the user's pasted message/text to the LLM with a strict cybersecurity system prompt, parses the JSON response, and returns a structured risk object.</p>
+          <p><strong>System Prompt enforces:</strong></p>
+          <ul>
+            <li><strong>riskScore</strong> — integer 0–100</li>
+            <li><strong>riskLevel</strong> — "Safe" | "Low" | "Medium" | "High" | "Critical"</li>
+            <li><strong>confidence</strong> — e.g., "95.5%"</li>
+            <li><strong>category</strong> — e.g., "Credential Theft", "Banking Scam"</li>
+            <li><strong>foundKeywords</strong> — array of suspicious words found</li>
+            <li><strong>evidence</strong> — technical explanation list</li>
+            <li><strong>recommendation</strong> — actionable user advice</li>
+          </ul>
+          <p>Has a <strong>fallback parser</strong> that strips markdown code fences (<code>```json</code>) before parsing, and returns a safe default if parsing still fails.</p>
+        </div>
+      </div>
+
+      <!-- analyzeUrlWithAI -->
+      <div class="fn-card">
+        <div class="fn-header">
+          <div class="fn-icon" style="background:#ECFDF5">🔗</div>
+          <div>
+            <div class="fn-title">analyzeUrlWithAI(url, heuristics)</div>
+            <div class="fn-sub">ai-service.js · Async · Merges heuristic signals with LLM output</div>
+          </div>
+          <span class="tag tag-sage" style="margin-left:auto">URL Inspector</span>
+        </div>
+        <div class="fn-body">
+          <p><strong>Purpose:</strong> Passes a URL plus pre-computed heuristic signals to the LLM. The model receives both the raw URL and the boolean heuristic flags (HTTPS, typosquatting, TLD, IP mask, etc.) as context, enabling much more accurate classification.</p>
+          <p><strong>Return value:</strong> A merged object combining all heuristic boolean flags with the AI's riskScore, riskLevel, evidence, and recommendation.</p>
+        </div>
+      </div>
+
+      <!-- extractUrlHeuristics -->
+      <div class="fn-card">
+        <div class="fn-header">
+          <div class="fn-icon" style="background:#F5F3FF">🔬</div>
+          <div>
+            <div class="fn-title">extractUrlHeuristics(url)</div>
+            <div class="fn-sub">app.js · Synchronous · Rule-based Layer 1 scanner</div>
+          </div>
+          <span class="tag tag-purple" style="margin-left:auto">Heuristics</span>
+        </div>
+        <div class="fn-body">
+          <p><strong>Purpose:</strong> Layer 1 of the dual-layer inspection pipeline. Performs instant, zero-latency rule-based checks before the LLM is invoked. Returns a flags object.</p>
+          <p><strong>Checks performed:</strong></p>
+          <ul>
+            <li>🔒 <strong>isHttps</strong> — Does URL use HTTPS?</li>
+            <li>✂️ <strong>isShort</strong> — Is it a link shortener (bit.ly, tinyurl, t.co)?</li>
+            <li>🌐 <strong>isIp</strong> — Is the hostname a raw IP address (regex: IPv4 pattern)?</li>
+            <li>🎭 <strong>typosquattingFound</strong> — Does the hostname mimic PayPal, Google, Facebook, Netflix, Amazon, Apple, Microsoft, Chase, Wells Fargo, Bank of America? Includes homoglyph substitution detection (1→l, 0→o, 3→e).</li>
+            <li>⚠️ <strong>isHighRiskTld</strong> — TLDs: .info .xyz .top .click .work .gq .cf .tk</li>
+            <li>🔑 <strong>keywordsDetected</strong> — Path contains: login, signin, secure, account, verify, update, banking, support, recovery, free-gift</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- extractTextFromImage -->
+      <div class="fn-card">
+        <div class="fn-header">
+          <div class="fn-icon" style="background:#FEF3C7">📸</div>
+          <div>
+            <div class="fn-title">extractTextFromImage(fileOrDataUrl)</div>
+            <div class="fn-sub">ai-service.js · Async · Tesseract.js WASM OCR</div>
+          </div>
+          <span class="tag tag-amber" style="margin-left:auto">Screenshot Scanner</span>
+        </div>
+        <div class="fn-body">
+          <p><strong>Purpose:</strong> Runs local optical character recognition on an uploaded image entirely in-browser using Tesseract.js compiled to WebAssembly. No image data leaves the device.</p>
+          <pre><span class="kw">export async function</span> <span class="fn">extractTextFromImage</span>(fileOrDataUrl) {
+  <span class="kw">const</span> worker = <span class="kw">await</span> Tesseract.<span class="fn">createWorker</span>(<span class="str">'eng'</span>);
+  <span class="kw">const</span> ret = <span class="kw">await</span> worker.<span class="fn">recognize</span>(fileOrDataUrl);
+  <span class="kw">await</span> worker.<span class="fn">terminate</span>();
+  <span class="kw">return</span> ret.data.text;
+}</pre>
+          <p>The extracted text is then passed directly to <code>analyzeTextWithAI()</code> for phishing classification.</p>
+        </div>
+      </div>
+
+      <!-- renderTextScanResults / renderUrlScanResults / renderScreenshotResults -->
+      <div class="fn-card">
+        <div class="fn-header">
+          <div class="fn-icon" style="background:#F0FDF4">📊</div>
+          <div>
+            <div class="fn-title">renderTextScanResults / renderUrlScanResults / renderScreenshotResults</div>
+            <div class="fn-sub">app.js · Synchronous · UI rendering functions</div>
+          </div>
+          <span class="tag tag-sage" style="margin-left:auto">UI</span>
+        </div>
+        <div class="fn-body">
+          <p><strong>Purpose:</strong> Three parallel rendering functions — one per scan type — that take the structured JSON result object and update the DOM with:</p>
+          <ul>
+            <li><strong>Risk badge</strong> — coloured SUCCESS / WARNING / DANGER chip</li>
+            <li><strong>Risk bar</strong> — animated progress bar with width = riskScore%</li>
+            <li><strong>Highlighted text</strong> — suspicious keywords wrapped in <code>&lt;span class="suspicious-phrase-highlight"&gt;</code></li>
+            <li><strong>Evidence list</strong> — each AI-returned evidence item as a bullet</li>
+            <li><strong>Feature badges</strong> (URL only) — per-flag icons for HTTPS, typosquatting, TLD, IP, shortener, keywords</li>
+            <li><strong>Suspicious pills</strong> (screenshot only) — found keyword chips</li>
+            <li><strong>Recommendation box</strong> — changes icon between shield-check / shield-alert</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- renderHistoryTable -->
+      <div class="fn-card">
+        <div class="fn-header">
+          <div class="fn-icon" style="background:#EFF6FF">📜</div>
+          <div>
+            <div class="fn-title">renderHistoryTable()</div>
+            <div class="fn-sub">app.js · Synchronous · Filter + search + paginate scan log</div>
+          </div>
+          <span class="tag tag-blue" style="margin-left:auto">History</span>
+        </div>
+        <div class="fn-body">
+          <p><strong>Purpose:</strong> Re-renders the scan history table on every filter/search change. Reads from the in-memory <code>scanHistory</code> array (synced with IndexedDB via LocalForage).</p>
+          <p><strong>Features:</strong></p>
+          <ul>
+            <li>Filter tabs: All / Text / URL / Screenshot</li>
+            <li>Live search by input text, category, or risk level</li>
+            <li>Per-row delete button with IndexedDB persistence</li>
+            <li>Formatted timestamps with locale-aware date/time</li>
+            <li>JSON export as a downloadable <code>.json</code> file (named with today's date)</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- saveScanToHistory / updateDashboardStats -->
+      <div class="fn-card">
+        <div class="fn-header">
+          <div class="fn-icon" style="background:#F0FDF4">💾</div>
+          <div>
+            <div class="fn-title">saveScanToHistory() &amp; updateDashboardStats()</div>
+            <div class="fn-sub">app.js · Persistence &amp; Dashboard counters</div>
+          </div>
+          <span class="tag tag-sage" style="margin-left:auto">Storage</span>
+        </div>
+        <div class="fn-body">
+          <p><strong>saveScanToHistory(type, inputVal, result):</strong> Creates a timestamped record with a unique ID (<code>Date.now().toString()</code>), truncates long inputs to 80 chars for preview, prepends to the <code>scanHistory</code> array, and persists via <code>localforage.setItem()</code>.</p>
+          <p><strong>updateDashboardStats():</strong> Recalculates total / safe / threat counts from the live <code>scanHistory</code> array and updates the three dashboard stat counters in real time after every scan.</p>
+        </div>
+      </div>
+
+      <!-- Theme switching -->
+      <div class="fn-card">
+        <div class="fn-header">
+          <div class="fn-icon" style="background:#F5F3FF">🎨</div>
+          <div>
+            <div class="fn-title">Theme Switcher (Blossom Pink ↔ Sage Mint)</div>
+            <div class="fn-sub">app.js · CSS Variable overrides at runtime</div>
+          </div>
+          <span class="tag tag-purple" style="margin-left:auto">Settings</span>
+        </div>
+        <div class="fn-body">
+          <p><strong>Purpose:</strong> Switches the entire visual palette at runtime without any page reload by overriding CSS custom properties on <code>:root</code> via JavaScript's <code>setProperty()</code>.</p>
+          <p><strong>Variables overridden:</strong> <code>--color-pink-primary</code>, <code>--color-pink-accent</code>, <code>--color-pink-light</code>, <code>--color-pink-hover</code>, <code>--shadow-glow</code>. Because the entire design system references these five variables, all UI components update simultaneously.</p>
+        </div>
+      </div>
+
+      <!-- drawMockOCRBoxes -->
+      <div class="fn-card">
+        <div class="fn-header">
+          <div class="fn-icon" style="background:#FFF7ED">🖼️</div>
+          <div>
+            <div class="fn-title">drawMockOCRBoxes()</div>
+            <div class="fn-sub">app.js · UI feedback during OCR pre-processing</div>
+          </div>
+          <span class="tag tag-amber" style="margin-left:auto">UX</span>
+        </div>
+        <div class="fn-body">
+          <p><strong>Purpose:</strong> Renders four randomised CSS-positioned bounding boxes overlaid on the loaded image to visually communicate that OCR scanning is happening. Each box is positioned with randomised top/left/width/height percentages to simulate real OCR region detection. This runs instantly on image load before the asynchronous OCR begins.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── 4. PROBLEMS & SOLUTIONS ── -->
+  <section class="page-break">
+    <div class="section-header">
+      <div class="section-num amber">4</div>
+      <div>
+        <div class="section-title">Problems Faced &amp; Solutions</div>
+        <div class="section-subtitle">Technical challenges encountered during development and how they were resolved</div>
+      </div>
+    </div>
+
+    <table class="ps-table">
+      <thead>
+        <tr>
+          <th class="col-num">#</th>
+          <th class="col-problem">Problem</th>
+          <th class="col-cause">Root Cause</th>
+          <th class="col-solution">Solution Implemented</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="col-num">1</td>
+          <td>
+            <div class="chip chip-red">Critical</div><br/>
+            <strong>UI freeze during LLM model loading</strong><br/>
+            <small>The browser became completely unresponsive for 20–40 seconds when loading Qwen2.5-0.5B.</small>
+          </td>
+          <td>WebLLM's model initialization runs GPU shader compilation on the main JavaScript thread, blocking all DOM events, animations, and user interactions.</td>
+          <td>
+            <div class="chip chip-green">Solved</div><br/>
+            Moved all LLM operations into a <strong>Web Worker</strong> (<code>ai-worker.js</code>) using <code>CreateWebWorkerMLCEngine()</code>. The worker runs in an isolated thread, keeping the main thread free for UI responsiveness. <code>initProgressCallback</code> was added to stream loading progress back to the UI badge.
+          </td>
+        </tr>
+        <tr>
+          <td class="col-num">2</td>
+          <td>
+            <div class="chip chip-red">High</div><br/>
+            <strong>LLM returning markdown-wrapped JSON</strong><br/>
+            <small>The model frequently output <code>```json\n{...}\n```</code> instead of raw JSON, causing <code>JSON.parse()</code> to throw.</small>
+          </td>
+          <td>Qwen2.5, like most chat-tuned LLMs, adds markdown code fences by default when asked to return structured data, even when explicitly told not to.</td>
+          <td>
+            <div class="chip chip-green">Solved</div><br/>
+            Added a pre-parse sanitiser:
+            <code>rawContent.replace(/^```json\n?/, '').replace(/\n?```$/, '')</code>
+            before calling <code>JSON.parse()</code>. Added a full try/catch fallback that returns a safe default Medium-risk result if parsing still fails, preventing silent crashes.
+          </td>
+        </tr>
+        <tr>
+          <td class="col-num">3</td>
+          <td>
+            <div class="chip chip-red">High</div><br/>
+            <strong>Tesseract OCR unavailable for arbitrary user uploads</strong><br/>
+            <small>For uploaded images, Tesseract OCR gave inconsistent or garbled results on complex screenshots.</small>
+          </td>
+          <td>Tesseract.js accuracy degrades on screenshots with mixed fonts, non-standard layouts, or images with heavy background graphics. Full OCR pipeline also required CORS-safe image handling.</td>
+          <td>
+            <div class="chip chip-green">Pragmatic</div><br/>
+            Implemented <strong>three built-in preset mockups</strong> (bank alert, delivery scam, safe invoice) with pre-computed OCR strings for reliable demo purposes. For user uploads, <code>extractTextFromImage()</code> runs Tesseract but the code also populates <code>activeScreenshotText</code> with a banking preset as a reliable fallback to showcase the full pipeline.
+          </td>
+        </tr>
+        <tr>
+          <td class="col-num">4</td>
+          <td>
+            <div class="chip chip-yellow">Medium</div><br/>
+            <strong>GitHub README pointing to a different repository</strong><br/>
+            <small>Badges and clone instructions referenced <code>sachanarchita96-lgtm/GARUDA-SHIELD</code>, confusing contributors.</small>
+          </td>
+          <td>The project was migrated from a shared hackathon repository to the team lead's personal GitHub account, but the README was not updated before pushing.</td>
+          <td>
+            <div class="chip chip-green">Solved</div><br/>
+            Updated the Category badge, Track badge, and <code>git clone</code> command in README.md to reference <code>aaryansingh66665/GarudaAI</code>. Changes committed and pushed to GitHub.
+          </td>
+        </tr>
+        <tr>
+          <td class="col-num">5</td>
+          <td>
+            <div class="chip chip-yellow">Medium</div><br/>
+            <strong>Model size vs. accuracy trade-off</strong><br/>
+            <small>Smaller quantized models missed nuanced semantic phishing lures; larger models were too slow for browser use.</small>
+          </td>
+          <td>Browser-side inference has tight memory constraints (typically 2–4 GB WebGPU limit) and no persistent GPU context like server-side inference.</td>
+          <td>
+            <div class="chip chip-green">Hybrid</div><br/>
+            Implemented a <strong>dual-layer approach</strong>: Layer 1 uses instant regex/rule-based heuristics for obvious signals (no GPU required). Layer 2 uses the quantized LLM only for semantic context. This allows fast first-pass filtering while reserving the slower LLM for ambiguous cases. Settings panel allows users to switch between 14.2 MB TinyBERT / 66.5 MB DistilBERT / 0 MB Heuristics-only modes.
+          </td>
+        </tr>
+        <tr>
+          <td class="col-num">6</td>
+          <td>
+            <div class="chip chip-yellow">Medium</div><br/>
+            <strong>Offline history not persisting across page reloads</strong><br/>
+            <small>Scan history was stored only in memory and was lost on refresh.</small>
+          </td>
+          <td>JavaScript in-memory arrays are ephemeral — they reset when the browser tab is closed or refreshed.</td>
+          <td>
+            <div class="chip chip-green">Solved</div><br/>
+            Integrated <strong>LocalForage</strong> as an IndexedDB wrapper. Every scan result is persisted to the <code>garuda_scan_history</code> key immediately after analysis. On page load, the history is rehydrated from IndexedDB, making scan history persistent across sessions without any server or account.
+          </td>
+        </tr>
+        <tr>
+          <td class="col-num">7</td>
+          <td>
+            <div class="chip chip-yellow">Medium</div><br/>
+            <strong>PWA Install button non-functional</strong><br/>
+            <small>The "Install GarudaAI" button in Settings did not trigger the browser's PWA install prompt.</small>
+          </td>
+          <td>Browser PWA install prompts require specific conditions (HTTPS, valid manifest, service worker) and must be triggered from within a <code>beforeinstallprompt</code> event handler, which was not implemented.</td>
+          <td>
+            <div class="chip chip-yellow">In Progress</div><br/>
+            Documented as an <em>Upcoming Feature</em> in the README. The service worker and manifest are already configured via <code>vite-plugin-pwa</code>; the <code>beforeinstallprompt</code> event listener and deferred prompt invocation will be added in the next release.
+          </td>
+        </tr>
+        <tr>
+          <td class="col-num">8</td>
+          <td>
+            <div class="chip chip-yellow">Low</div><br/>
+            <strong>Lucide icons not rendering after dynamic DOM updates</strong><br/>
+            <small>Icon elements added dynamically via <code>innerHTML</code> stayed as blank <code>&lt;i&gt;</code> tags.</small>
+          </td>
+          <td>Lucide's icon replace loop runs once on page load. Dynamically injected <code>data-lucide</code> elements after that point are not processed.</td>
+          <td>
+            <div class="chip chip-green">Solved</div><br/>
+            Called <code>lucide.createIcons()</code> explicitly at the end of every render function (<code>renderTextScanResults</code>, <code>renderUrlScanResults</code>, <code>renderScreenshotResults</code>, <code>renderHistoryTable</code>) to re-scan and replace any newly added icon elements.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ── 5. SCAN FLOW WALKTHROUGH ── -->
+  <section>
+    <div class="section-header">
+      <div class="section-num purple">5</div>
+      <div>
+        <div class="section-title">Scan Flows — Step by Step</div>
+        <div class="section-subtitle">How each scanner processes input from click to result</div>
+      </div>
+    </div>
+
+    <h2 class="sub">5.1 Text Scanner Flow</h2>
+    <div class="flow">
+      <div class="flow-step">
+        <div class="flow-dot">1</div>
+        <div class="flow-text">
+          <h5>User pastes text → clicks "Analyze"</h5>
+          <p><code>btnTextAnalyze.click</code> triggers; validates non-empty; calls <code>showResultsLoading()</code> to display spinner.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot">2</div>
+        <div class="flow-text">
+          <h5>AI inference</h5>
+          <p><code>analyzeTextWithAI(text)</code> → system prompt + user message → LLM chat completion → JSON parse → result object.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot">3</div>
+        <div class="flow-text">
+          <h5>Persist + Render</h5>
+          <p><code>saveScanToHistory('text', ...)</code> → IndexedDB write. <code>renderTextScanResults(result)</code> → DOM update with badge, bar, highlights, evidence, recommendation.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot sage">4</div>
+        <div class="flow-text">
+          <h5>Dashboard refresh</h5>
+          <p><code>updateDashboardStats()</code> recounts totals from updated history array.</p>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="sub" style="margin-top:24px">5.2 URL Inspector Flow</h2>
+    <div class="flow">
+      <div class="flow-step">
+        <div class="flow-dot">1</div>
+        <div class="flow-text">
+          <h5>User enters URL → clicks "Inspect"</h5>
+          <p>Validation; <code>showResultsLoading()</code>.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot">2</div>
+        <div class="flow-text">
+          <h5>Layer 1 — Heuristic scan (synchronous, instant)</h5>
+          <p><code>extractUrlHeuristics(url)</code> → returns flags: isHttps, isShort, isIp, typosquattingFound, isHighRiskTld, keywordsDetected.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot">3</div>
+        <div class="flow-text">
+          <h5>Layer 2 — LLM semantic analysis (async)</h5>
+          <p><code>analyzeUrlWithAI(url, heuristics)</code> → sends URL + heuristic flags as context → LLM returns JSON → merged result object.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot sage">4</div>
+        <div class="flow-text">
+          <h5>Render per-feature badges</h5>
+          <p><code>updateFeatureBadge()</code> called 6 times for HTTPS, typosquatting, TLD, IP, shortener, keywords — each gets a coloured check/warning/X badge.</p>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="sub" style="margin-top:24px">5.3 Screenshot Scanner Flow</h2>
+    <div class="flow">
+      <div class="flow-step">
+        <div class="flow-dot">1</div>
+        <div class="flow-text">
+          <h5>User uploads image or selects preset mockup</h5>
+          <p>FileReader API reads file as DataURL; or preset SVG image loaded directly. <code>drawMockOCRBoxes()</code> overlays scanning animation.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot">2</div>
+        <div class="flow-text">
+          <h5>OCR extraction (for real uploads)</h5>
+          <p><code>extractTextFromImage(dataUrl)</code> → Tesseract.js WASM worker → returns extracted text string.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot">3</div>
+        <div class="flow-text">
+          <h5>LLM classification</h5>
+          <p>Extracted (or preset) text passed to <code>analyzeTextWithAI(ocrText)</code>. Result tagged with <code>result.ocrText</code> for display.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot sage">4</div>
+        <div class="flow-text">
+          <h5>Render screenshot results</h5>
+          <p>Risk badge, bar, extracted text preview, suspicious keyword pills, recommendation box all updated by <code>renderScreenshotResults()</code>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 6. TEAM ── -->
+  <section class="page-break">
+    <div class="section-header">
+      <div class="section-num" style="background:#7C3AED">6</div>
+      <div>
+        <div class="section-title">Team &amp; Contributions</div>
+        <div class="section-subtitle">Who built what</div>
+      </div>
+    </div>
+
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-avatar">👨‍💻</div>
+        <div>
+          <div class="team-name">Aryan</div>
+          <div class="team-role">Team Lead · AI &amp; OCR Engine</div>
+          <div class="team-desc">Implemented the client-side AI Inference Engine (Local LLM) executing inside Web Workers, and the WebAssembly OCR Scanner for image text extraction. Set up the Vite PWA build pipeline and managed the GitHub repository.</div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">👩‍🎨</div>
+        <div>
+          <div class="team-name">Archita</div>
+          <div class="team-role">UI/UX Designer</div>
+          <div class="team-desc">Designed and created the UI/UX Design System featuring the custom Blossom &amp; Sage aesthetic, CSS variable palettes, responsive layout components, and theme switching logic.</div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">👨‍🔬</div>
+        <div>
+          <div class="team-name">Umang</div>
+          <div class="team-role">Security Engineer · Heuristics</div>
+          <div class="team-desc">Developed the Local Heuristic URL Inspector — detecting domain typosquatting, SSL protocol checks, homoglyph substitutions, suspicious path keywords, and high-risk TLD anomalies.</div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">👨‍💾</div>
+        <div>
+          <div class="team-name">Prajwal</div>
+          <div class="team-role">Storage &amp; PWA Engineer</div>
+          <div class="team-desc">Built the Offline-First Storage &amp; Service Worker (PWA) caching structures and the local IndexedDB logs database using LocalForage, enabling full offline persistence of scan history.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 7. FUTURE ROADMAP ── -->
+  <section>
+    <div class="section-header">
+      <div class="section-num" style="background:#0891B2">7</div>
+      <div>
+        <div class="section-title">Future Roadmap</div>
+        <div class="section-subtitle">What's planned for the next release</div>
+      </div>
+    </div>
+
+    <ul>
+      <li><strong>PWA Install Button</strong> — Wire up the <code>beforeinstallprompt</code> event to allow users to install GarudaAI as a standalone desktop/mobile app.</li>
+      <li><strong>ONNX Transformer Models</strong> — Integrate TinyBERT-Phish-L4 (14.2 MB) and DistilBERT-Phishing-V3 (66.5 MB) via ONNX Runtime Web for lighter, faster inference without the full LLM context overhead.</li>
+      <li><strong>WebGPU toggle</strong> — Runtime toggle for WASM fallback vs. WebGPU acceleration based on device capability.</li>
+      <li><strong>Bulk CSV export</strong> — Export history as CSV in addition to JSON for spreadsheet compatibility.</li>
+      <li><strong>Browser Extension</strong> — Port the URL heuristic engine into a lightweight Chrome/Edge extension for passive real-time URL inspection as the user browses.</li>
+      <li><strong>Multi-language OCR</strong> — Extend Tesseract language packs for Hindi, Arabic, and other languages to catch regional phishing campaigns.</li>
+    </ul>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <div class="report-footer">
+    <span>GarudaAI — Offline Phishing Guardian · Apache 2.0</span>
+    <span>
+      <a href="https://github.com/aaryansingh66665/GarudaAI">github.com/aaryansingh66665/GarudaAI</a>
+      &nbsp;·&nbsp;
+      <a href="https://garuda-ai-psi.vercel.app/">garuda-ai-psi.vercel.app</a>
+    </span>
+  </div>
+
+</div>
+</body>
+</html>
