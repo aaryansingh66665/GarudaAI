@@ -9,6 +9,7 @@
 
 *   **Live Web Deployment:** [https://garuda-ai-psi.vercel.app/](https://garuda-ai-psi.vercel.app/)
 *   **Demo video:** https://drive.google.com/file/d/1I80SAOHsanW3obfYREDc4_dequjlaSr9/view?usp=sharing
+*   **other Media:**
 *   **Aesthetic Theme:** *Blossom & Sage* pastel theme (soft warm cream `#FCFAF7` background with rose pink accents and sage green success indicators).
 
 ---
